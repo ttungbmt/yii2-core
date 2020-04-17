@@ -2,7 +2,7 @@
     "name": "ttungbmt/yii2-core",
     "description": "Core for Yii 2",
     "type": "yii2-extension",
-    "keywords": ["yii2","extension"],
+    "keywords": ["yii2","extension", "PHP"],
     "license": "MIT",
     "authors": [
         {
