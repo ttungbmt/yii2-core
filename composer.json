@@ -34,7 +34,6 @@
         "kartik-v/yii2-widget-fileinput": "@dev",
         "yii2mod/yii2-settings": "*",
         "sergeymakinen/yii2-facades": "^1.5",
-        "xtetis/yii2-bootstrap4-glyphicons": "*",
         "nepstor/yii2-datetime-compare-validator": "*",
         "codeonyii/yii2-at-least-validator": "*",
         "mdmsoft/yii2-admin": "dev-master",
