@@ -32,6 +32,8 @@ class CrudAction extends Action
 
     public $handler;
 
+    public $title;
+
     public $modal = [
         'title' => ''
     ];

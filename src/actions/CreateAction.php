@@ -63,7 +63,7 @@ class CreateAction extends CrudAction
 
         if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            $title = "Create new DmQuan";
+            $title = $this->title;
 
             if ($model->load($request->post())) {
                 if ($this->enableAjaxValidation && empty($params['ajax']) === false) {

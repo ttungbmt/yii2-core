@@ -61,7 +61,7 @@ class UpdateAction extends CrudAction
 
         if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            $title = "Create new DmQuan";
+            $title = Yii::t('app', $this->title, ['id' => $pk, 'gid' => $pk]);
 
             if ($model->load($request->post())) {
                 if ($this->enableAjaxValidation && empty($params['ajax']) === false) {
