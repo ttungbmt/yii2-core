@@ -25,8 +25,6 @@ class GeomValidator extends Validator {
                 ['lng', 'match', 'pattern' => '/^(\+|-)?(?:180(?:(?:\.0{1,15})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,15})?))$/'],
             ]);
 
-            dd($value->get('1'), $value->get('0'));
-
             if(!$valid2->hasErrors()){
                 $model->$attribute = $value->sortKeys()->all();
                 return;
