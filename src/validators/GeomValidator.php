@@ -21,9 +21,11 @@ class GeomValidator extends Validator {
         if($value->count() === 2 && $valid1->validate($value->all())){
 
             $valid2 = DynamicModel::validateData(['lat' => $value->get('1'), 'lng' => $value->get('0')], [
-                ['lat', 'match', 'pattern' => '/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/'],
-                ['lng', 'match', 'pattern' => '/^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/'],
+                ['lat', 'match', 'pattern' => '/^(\+|-)?(?:90(?:(?:\.0{1,15})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,15})?))$/'],
+                ['lng', 'match', 'pattern' => '/^(\+|-)?(?:180(?:(?:\.0{1,15})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,15})?))$/'],
             ]);
+
+            dd($value->get('1'), $value->get('0'));
 
             if(!$valid2->hasErrors()){
                 $model->$attribute = $value->sortKeys()->all();
