@@ -59,6 +59,7 @@ class UpdateAction extends CrudAction
         $btnSave = Html::button('Save', ['class' => 'btn btn-primary', 'type' => "submit"]);
         $btnCreateMore = Html::a('Create More', ['create'], ['class' => 'btn btn-primary', 'role' => 'modal-remote']);
 
+
         if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             $title = Yii::t('app', $this->title, ['id' => $pk, 'gid' => $pk]);
@@ -68,7 +69,7 @@ class UpdateAction extends CrudAction
                     return ActiveForm::validate($model);
                 }
 
-                if ($model->save()) {
+                if ($this->handlerSave($model)) {
                     $this->runSuccessHandler($model);
 
                     if ($this->redirectUrl != false) {
@@ -104,8 +105,7 @@ class UpdateAction extends CrudAction
         }
 
 
-
-        if ($model->load($params)) {
+        if ($request->isPost && $model->load($params)) {
             if ($this->enableAjaxValidation && request()->isAjax && empty($params['ajax']) === false) {
                 return $this->render(ActiveForm::validate($model));
             }
@@ -119,6 +119,7 @@ class UpdateAction extends CrudAction
                 $this->runErrorHandler($model);
             }
         }
+
         return $this->render($this->view, [
             'model' => $model,
         ]);
