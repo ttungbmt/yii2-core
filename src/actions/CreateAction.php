@@ -61,6 +61,7 @@ class CreateAction extends CrudAction
         $btnSave = Html::button('Save', ['class' => 'btn btn-primary', 'type' => "submit"]);
         $btnCreateMore = Html::a('Create More', ['create'], ['class' => 'btn btn-primary', 'role' => 'modal-remote']);
 
+
         if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             $title = $this->title;
@@ -70,7 +71,7 @@ class CreateAction extends CrudAction
                     return ActiveForm::validate($model);
                 }
 
-                if ($model->save()) {
+                if ($this->handlerSave($model)) {
                     $this->runSuccessHandler($model);
 
                     if ($this->redirectUrl != false) {
