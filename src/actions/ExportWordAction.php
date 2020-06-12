@@ -1,5 +1,5 @@
 <?php
-namespace ttungbmt\actionss;
+namespace ttungbmt\actions;
 
 use Yii;
 use yii\base\Action;
