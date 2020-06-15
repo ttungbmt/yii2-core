@@ -15,7 +15,7 @@ class ExportWordAction extends Action {
         # Html viewer: https://codebeautify.org/htmlviewer
         $data = call_user_func($this->getData);
         try {
-//            $this->addHeaders();
+            $this->addHeaders();
             $content = $this->controller->renderPartial($this->view, $data);
             return $content;
         } catch (ViewNotFoundException $e) {
