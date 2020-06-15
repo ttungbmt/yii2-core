@@ -2,6 +2,7 @@
 
 namespace ttungbmt\base;
 
+use Illuminate\Support\Collection;
 use kartik\widgets\DatePicker;
 use ttungbmt\support\facades\Setting;
 use Yii;
@@ -20,6 +21,7 @@ class Bootstrap implements BootstrapInterface
         $this->registerModules($app);
         $this->registerComponents($app);
         $this->registerValidators($app);
+        $this->registerExtraCollection($app);
 
         $this->setContainers();
     }
@@ -88,5 +90,13 @@ class Bootstrap implements BootstrapInterface
             'atLeast' => \codeonyii\yii2validators\AtLeastValidator::class,
             'dateCompare' => \nepstor\validators\DateTimeCompareValidator::class,
         ]);
+    }
+
+    protected function registerExtraCollection(){
+        if(!Collection::hasMacro('firstWhereGet')){
+            Collection::macro('firstWhereGet', function ($key, $value = null, $path = null, $default = null) {
+                return data_get($this->firstWhere($key, $value), $path, $default);
+            });
+        }
     }
 }
