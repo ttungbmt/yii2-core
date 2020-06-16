@@ -21,6 +21,8 @@ class GeomValidator extends Validator
     {
         $value = collect($model->$attribute)->filter(function ($i) {
             return ($i || $i == 0) && trim($i) !== "";
+        })->map(function ($i){
+            return trim($i);
         });
 
         if ($this->allowEmpty && $this->isEmpty($value)) {
