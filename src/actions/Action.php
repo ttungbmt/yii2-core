@@ -1,6 +1,7 @@
 <?php
 namespace ttungbmt\actions;
 
+use Illuminate\Support\Arr;
 use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
@@ -221,19 +222,34 @@ abstract class Action extends \yii\base\Action
         return $model;
     }
 
+    protected function renderAjax($view, $params = [])
+    {
+        if(!Arr::isAssoc($this->viewParams)){
+            $this->viewParams = call_user_func($this->viewParams);
+        }
+
+        return $this->controller->renderAjax($view, array_merge($this->viewParams, $params));
+    }
+
     protected function render($view, $params = [])
     {
         if ($this->viewParams instanceof \Closure) {
             $this->viewParams = call_user_func($this->viewParams, $this);
         }
 
+        if($this->viewParams && !Arr::isAssoc($this->viewParams)){
+            $this->viewParams = call_user_func($this->viewParams);
+        }
+
         if(is_array($view)){
             return $this->controller->asJson($view);
         }
 
-        return $this->controller->render($view, array_merge([
+        $viewParams = array_merge([
             'pjaxContainer' => str_replace( '#', '', $this->pjaxContainer)
-        ], $this->viewParams, $params));
+        ], $this->viewParams, $params);
+
+        return $this->controller->render($view, $viewParams);
     }
 
 

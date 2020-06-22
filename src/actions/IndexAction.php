@@ -23,6 +23,7 @@ class IndexAction extends CrudAction
             $this->viewParams['dataProvider'] = $this->dataProvider ? $this->dataProvider : $model->search($params);
         }
 
+
         return $this->render($this->view, [
             'model' => $model,
         ]);

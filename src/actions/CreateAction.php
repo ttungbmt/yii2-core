@@ -71,6 +71,7 @@ class CreateAction extends CrudAction
                     return ActiveForm::validate($model);
                 }
 
+
                 if ($this->handlerSave($model)) {
                     $this->runSuccessHandler($model);
 
@@ -101,7 +102,7 @@ class CreateAction extends CrudAction
 
             return [
                 'title'   => $title,
-                'content' => $this->controller->renderAjax($this->view, ['model' => $model,]),
+                'content' => $this->renderAjax($this->view, ['model' => $model,]),
                 'footer'  => $btnClose . $btnSave
             ];
         }

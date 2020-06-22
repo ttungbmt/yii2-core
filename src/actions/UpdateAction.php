@@ -99,7 +99,7 @@ class UpdateAction extends CrudAction
 
             return [
                 'title'   => $title,
-                'content' => $this->controller->renderAjax($this->view, ['model' => $model,]),
+                'content' => $this->renderAjax($this->view, ['model' => $model,]),
                 'footer'  => $btnClose . $btnSave
             ];
         }
