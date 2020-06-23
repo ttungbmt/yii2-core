@@ -224,7 +224,7 @@ abstract class Action extends \yii\base\Action
 
     protected function renderAjax($view, $params = [])
     {
-        if(!Arr::isAssoc($this->viewParams)){
+        if(!empty($this->viewParams) && !Arr::isAssoc($this->viewParams)){
             $this->viewParams = call_user_func($this->viewParams);
         }
 
