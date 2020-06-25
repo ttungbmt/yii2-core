@@ -13,6 +13,17 @@ if (!function_exists('app')) {
     }
 }
 
+if (!function_exists('toFilterValue')) {
+    function toFilterValue($options )
+    {
+        return function ($model) use($options){
+            $filter = collect($options['filter']);
+            $value = $options['value'];
+            return $filter->get($model->{$value}, '');
+        };
+    }
+}
+
 if (!function_exists('request')) {
     /**
      * Get an instance of the current request or an input item from the request.
