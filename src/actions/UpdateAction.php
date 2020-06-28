@@ -59,12 +59,14 @@ class UpdateAction extends CrudAction
         $btnSave = Html::button('Save', ['class' => 'btn btn-primary', 'type' => "submit"]);
         $btnCreateMore = Html::a('Create More', ['create'], ['class' => 'btn btn-primary', 'role' => 'modal-remote']);
 
-
         if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            $title = Yii::t('app', $this->title, ['id' => $pk, 'gid' => $pk]);
+
+            $resp = ['title'   => Yii::t('app', $this->title, ['id' => $pk, 'gid' => $pk]),];
+            $message =  data_get($this->messages, 'success', 'Đã cập nhật thành công');
 
             if ($model->load($request->post())) {
+
                 if ($this->enableAjaxValidation && empty($params['ajax']) === false) {
                     return ActiveForm::validate($model);
                 }
@@ -72,36 +74,34 @@ class UpdateAction extends CrudAction
                 if ($this->handlerSave($model)) {
                     $this->runSuccessHandler($model);
 
+                    $forceReload = $this->pjaxContainer;
+
                     if ($this->redirectUrl != false) {
-//                        $btEdit = Html::a('Edit', ['update', $this->primaryKeyParam => $model->{$this->primaryKeyParam}], ['class' => 'btn btn-primary', 'role' => 'modal-remote']);
-//                        return [
-//                            'title'=> "View DmQuan",
-//                            'content'=> $this->controller->renderAjax('view', ['model' => $model,]),
-//                            'footer'=> $btnClose.$btEdit
-//                        ];
                         return [
-                            'forceReload' => $this->pjaxContainer,
+                            'forceReload' => $forceReload,
                             'redirectUrl' => Url::to($this->redirect($model)),
-                            'forceClose'  => true
+                            'forceClose' => true,
                         ];
                     }
 
-                    return [
-                        'forceReload' => $this->pjaxContainer,
-                        'title'       => $title,
-                        'content'     => '<span class="text-success">Create DmQuan success</span>',
+                    return array_merge($resp, [
+                        'forceReload' => $forceReload,
+                        'content' => "<span class='text-success'>{$message}</span>",
+                        'message' => $message,
                         'footer'      => $btnClose . $btnCreateMore
-                    ];
-                } elseif ($model->hasErrors() === false) {
+                    ]);
+                } elseif ($model->hasErrors() === true) {
                     $this->runErrorHandler($model);
+                    $resp['errors'] = $model->getErrors();
+                    $resp['message'] = data_get($this->messages, 'error', 'Cập nhật thất bại');
                 }
             }
 
-            return [
-                'title'   => $title,
-                'content' => $this->renderAjax($this->view, ['model' => $model,]),
+
+            return array_merge($resp, [
+                'content' => $this->renderAjax($this->view, ['model' => $model]),
                 'footer'  => $btnClose . $btnSave
-            ];
+            ]);
         }
 
 

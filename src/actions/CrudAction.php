@@ -30,6 +30,8 @@ class CrudAction extends Action
 
     public $attributes = [];
 
+    public $messages = [];
+
     public $handler;
 
     public $title;
