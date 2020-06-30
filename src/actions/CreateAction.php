@@ -65,7 +65,7 @@ class CreateAction extends CrudAction
         if ($request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
 
-            $resp = ['title'   => Yii::t('app', $this->title, ['id' => $pk, 'gid' => $pk]),];
+            $resp = ['title'   => Yii::t('app', $this->title),];
             $message =  data_get($this->messages, 'success', 'Đã cập nhật thành công');
 
             if ($model->load($request->post())) {
